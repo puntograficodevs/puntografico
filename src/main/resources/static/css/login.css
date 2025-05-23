@@ -42,8 +42,7 @@ h3 {
 }
 
 .login-image {
-    max-width: 25%;
-    height: auto;
+    width: 400px;
     object-fit: contain;
     margin: auto;
 }
