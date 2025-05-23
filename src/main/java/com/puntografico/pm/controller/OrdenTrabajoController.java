@@ -13,15 +13,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class HomeController {
+public class OrdenTrabajoController {
+
     @Autowired
     private EmpleadoService empleadoService;
 
     @Autowired
     private TipoProductoService tipoProductoService;
 
-    @GetMapping("/home")
-    public String home(@RequestParam(required = false) String key, @RequestParam(required = false) String username, Model model) {
+    @GetMapping("/crear-orden")
+    public String crearOrden(@RequestParam(required = false) String key, @RequestParam(required = false) String username, Model model) {
         if (key == null || !key.equals("asdghaer123riuhy12o34y12fh")) {
             return "redirect:/";
         }
@@ -32,7 +33,7 @@ public class HomeController {
         model.addAttribute("empleado", empleado);
         model.addAttribute("nombreEmpleado", formatearNombre(empleado.getNombre()));
         model.addAttribute("productos", productos);
-        return "home";
+        return "crear-orden";
     }
 
     private String formatearNombre(String nombre){

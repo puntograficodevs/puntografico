@@ -21,20 +21,39 @@ public class OrdenTrabajo {
     private Empleado empleado;
 
     private String clienteNombre;
+
     private String clienteTelefono;
+
     private LocalDate fechaPedido;
+
     private LocalDate fechaMuestra;
+
     private LocalDate fechaEntrega;
+
     private String horaEntrega;
+
     private int cantidad;
+
     private double total;
+
     private double abonado;
+
     private double resta;
+
     private String enlaceArchivo;
+
     private String detalle;
+
     @Enumerated(EnumType.STRING)
     private MedioPago medioPago;
+
     @Enumerated(EnumType.STRING)
     private EstadoPago estadoPago;
 
+    @Enumerated(EnumType.STRING)
+    private EstadoOrden estadoOrden;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_tipo_producto")
+    private TipoProducto tipoProducto;
 }
