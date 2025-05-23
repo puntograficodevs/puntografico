@@ -4,4 +4,10 @@ body, html {
     padding: 0;
     height: 100%;
     font-family: 'Montserrat';
+    font-size: 0.95rem;
+}
+
+.navbar {
+    margin-right: 1.5em;
+    margin-left: 1.5em;
 }
