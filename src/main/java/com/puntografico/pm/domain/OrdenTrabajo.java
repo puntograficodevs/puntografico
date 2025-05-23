@@ -34,5 +34,7 @@ public class OrdenTrabajo {
     private String detalle;
     @Enumerated(EnumType.STRING)
     private MedioPago medioPago;
+    @Enumerated(EnumType.STRING)
+    private EstadoPago estadoPago;
 
 }
