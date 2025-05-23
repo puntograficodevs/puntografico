@@ -27,7 +27,7 @@ public class LoginController {
         Optional<Empleado> empleado = empleadoService.traerEmpleado(username, password);
 
         if (empleado.isPresent()) {
-            return "redirect:/home";
+            return "redirect:/home?key=asdghaer123riuhy12o34y12fh";
         } else {
             model.addAttribute("error", true);
             return "login";
