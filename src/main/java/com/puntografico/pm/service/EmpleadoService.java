@@ -13,7 +13,11 @@ public class EmpleadoService {
     @Autowired
     private EmpleadoRepository empleadoRepository;
 
-    public Optional<Empleado> traerEmpleado(String username, String password){
+    public Optional<Empleado> traerUsuarioValido(String username, String password) {
         return empleadoRepository.findByUsernameAndPassword(username, password);
+    }
+
+    public Optional<Empleado> traerSegunUsername(String username) {
+        return empleadoRepository.findByUsername(username);
     }
 }

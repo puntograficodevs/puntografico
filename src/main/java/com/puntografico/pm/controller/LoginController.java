@@ -24,10 +24,10 @@ public class LoginController {
 
     @PostMapping("/")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
-        Optional<Empleado> empleado = empleadoService.traerEmpleado(username, password);
+        Optional<Empleado> empleado = empleadoService.traerUsuarioValido(username, password);
 
         if (empleado.isPresent()) {
-            return "redirect:/home?key=asdghaer123riuhy12o34y12fh";
+            return "redirect:/home?key=asdghaer123riuhy12o34y12fh&username=" + username;
         } else {
             model.addAttribute("error", true);
             return "login";
