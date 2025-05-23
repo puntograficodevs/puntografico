@@ -3,7 +3,7 @@ body, html {
     margin: 0;
     padding: 0;
     height: 100%;
-    font-family: sans-serif;
+    font-family: 'Montserrat';
 }
 
 h3 {
@@ -24,6 +24,7 @@ h3 {
     width: 70%;
     flex: 1;
     background: linear-gradient(to bottom, rgb(229,41,135), rgb(0,159,227));
+    display: flex;
 }
 
 .right {
@@ -32,4 +33,17 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.error-login {
+    position: absolute;
+    left: 25%;
+    top:15%;
+}
+
+.login-image {
+    max-width: 25%;
+    height: auto;
+    object-fit: contain;
+    margin: auto;
 }
