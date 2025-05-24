@@ -1,4 +1,4 @@
-package com.puntografico.pm.domain;
+package com.puntografico.pm.enums;
 
 public enum EstadoOrden {
     TOMADO,

@@ -1,5 +1,8 @@
 package com.puntografico.pm.domain;
 
+import com.puntografico.pm.enums.EstadoOrden;
+import com.puntografico.pm.enums.EstadoPago;
+import com.puntografico.pm.enums.MedioPago;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +16,6 @@ public class OrdenTrabajo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_orden")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -54,6 +56,6 @@ public class OrdenTrabajo {
     private EstadoOrden estadoOrden;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tipo_producto")
-    private TipoProducto tipoProducto;
+    @JoinColumn(name = "id_categoria_producto")
+    private CategoriaProducto categoriaProducto;
 }
