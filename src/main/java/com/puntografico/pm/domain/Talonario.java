@@ -22,12 +22,16 @@ public class Talonario {
     @JoinColumn(name = "id_categoria_producto")
     private CategoriaProducto categoriaProducto;
 
+    @Enumerated(EnumType.STRING)
     private TipoColor tipoColor;
 
+    @Enumerated(EnumType.STRING)
     private TipoTalonario tipoTalonario;
 
+    @Enumerated(EnumType.STRING)
     private TipoArmado tipoArmado;
 
+    @Enumerated(EnumType.STRING)
     private TipoTerminacionTalonario tipoTerminacionTalonario;
 
     private String medida;

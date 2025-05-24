@@ -36,5 +36,5 @@ public class Folleto {
     @Enumerated(EnumType.STRING)
     private CantidadEstandar cantidadEstandar;
 
-    private String cantidadOtro;
+    private int cantidadOtro;
 }

@@ -29,7 +29,7 @@ public class Sello {
     @Enumerated(EnumType.STRING)
     private TipoProfesional tipoProfesional;
 
-    private char dibujo;
+    private String dibujo;
 
     private int tipografia;
 

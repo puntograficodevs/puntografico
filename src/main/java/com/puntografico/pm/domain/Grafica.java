@@ -22,7 +22,7 @@ public class Grafica {
     @JoinColumn(name = "id_categoria_producto")
     private CategoriaProducto categoriaProducto;
 
-    private boolean blueback;
+    private boolean esBlueback;
 
     @Enumerated(EnumType.STRING)
     private TipoObra tipoObra;

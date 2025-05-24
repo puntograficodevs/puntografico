@@ -1,13 +1,5 @@
-/*DESKTOP*/
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Montserrat';
-}
-
 h3 {
-    font-family: 'Montserrat';
+    font-family: 'Lemon Milk';
     text-align: center;
     margin-bottom: 32px;
 }
@@ -18,6 +10,7 @@ h3 {
     width: 100vw;
     margin: 0;
     max-width: 100%;
+    padding: 0;
 }
 
 .left {

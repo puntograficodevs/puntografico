@@ -3,43 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    <link rel="stylesheet" th:href="@{/css/home.css}"/>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/principal.css}"/>
+    <link rel="stylesheet" th:href="@{/css/crear-orden.css}"/>
     <title>Punto Gráfico</title>
 </head>
 <body>
+    <!--BARRA DE NAVEGACIÓN-->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{/home(key='asdghaer123riuhy12o34y12fh', username=${empleado.username})}">Punto Gráfico</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" th:href="@{/crear-orden(key='asdghaer123riuhy12o34y12fh', username=${empleado.username})}">Crear orden</a>
+                    </li>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{/home(key='asdghaer123riuhy12o34y12fh', username=${empleado.username})}">Punto Gráfico</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-
-            </ul>
-            <p class="text-primary">¡Bienvenido, <span th:text="${nombreEmpleado}"></span></span>!</p>
+                </ul>
+                <p class="text-primary">¡Bienvenido, <span th:text="${nombreEmpleado}"></span></span>!</p>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
+    <!--SELECTOR DE TIPO-->
+    <h6>¿A qué categoría pertenece?</h6>
     <div class="formulario-creacion-ordenes">
-        <select id="tipoProductoSelect"
-                name="tipoProducto"
+        <select id="selectCategoriaProducto"
+                name="categoriaProducto"
                 class="form-control mb-3"
-                onchange="mostrarTipoSeleccionado()" required>
+                onchange="mostrarCategoriaSeleccionada()" required>
             <option value="">-- Seleccioná un tipo --</option>
-            <option th:each="tipo : ${productos}"
-                    th:value="${tipo.id}"
-                    th:text="${tipo.nombre}"></option>
+            <option th:each="categoria : ${categoriasProductos}"
+                    th:value="${categoria.idCategoriaProducto}"
+                    th:text="${categoria.nombre}"></option>
         </select>
-
-
-
     </div>
 </body>
 <script src="/js/crear-orden.js"></script>

@@ -1,9 +1,9 @@
 package com.puntografico.pm.controller;
 
 import com.puntografico.pm.domain.Empleado;
-import com.puntografico.pm.domain.TipoProducto;
+import com.puntografico.pm.domain.CategoriaProducto;
 import com.puntografico.pm.service.EmpleadoService;
-import com.puntografico.pm.service.TipoProductoService;
+import com.puntografico.pm.service.CategoriaProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ public class HomeController {
     private EmpleadoService empleadoService;
 
     @Autowired
-    private TipoProductoService tipoProductoService;
+    private CategoriaProductoService categoriaProductoService;
 
     @GetMapping("/home")
     public String home(@RequestParam(required = false) String key, @RequestParam(required = false) String username, Model model) {
@@ -27,7 +27,7 @@ public class HomeController {
         }
 
         Empleado empleado = empleadoService.traerSegunUsername(username).get();
-        List<TipoProducto> productos = tipoProductoService.buscarTodos();
+        List<CategoriaProducto> productos = categoriaProductoService.buscarTodos();
 
         model.addAttribute("empleado", empleado);
         model.addAttribute("nombreEmpleado", formatearNombre(empleado.getNombre()));
