@@ -22,8 +22,8 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/")
-    public String login(@RequestParam String username, @RequestParam String password, Model model) {
+    @PostMapping("/login")
+    public String validarLogin(@RequestParam String username, @RequestParam String password, Model model) {
         Optional<Empleado> empleado = empleadoService.traerUsuarioValido(username, password);
 
         if (empleado.isPresent()) {

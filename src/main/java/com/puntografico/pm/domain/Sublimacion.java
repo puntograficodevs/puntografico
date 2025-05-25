@@ -29,4 +29,16 @@ public class Sublimacion {
 
     @Enumerated(EnumType.STRING)
     private TipoOtraSublimacion tipoOtraSublimacion;
+
+    private int cantidad;
+
+    private double total;
+
+    private double abonado;
+
+    private double resta;
+
+    private String enlaceArchivo;
+
+    private String detalle;
 }

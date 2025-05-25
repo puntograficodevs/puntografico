@@ -37,4 +37,16 @@ public class EtiquetaSticker {
     private String otros;
 
     private String medida;
+
+    private int cantidad;
+
+    private double total;
+
+    private double abonado;
+
+    private double resta;
+
+    private String enlaceArchivo;
+
+    private String detalle;
 }

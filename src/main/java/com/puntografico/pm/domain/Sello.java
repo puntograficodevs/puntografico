@@ -43,4 +43,16 @@ public class Sello {
 
     @Enumerated(EnumType.STRING)
     private TipoModelo tipoModelo;
+
+    private int cantidad;
+
+    private double total;
+
+    private double abonado;
+
+    private double resta;
+
+    private String enlaceArchivo;
+
+    private String detalle;
 }

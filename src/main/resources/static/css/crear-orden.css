@@ -7,3 +7,7 @@ h6 {
     font-family: 'Lemon Milk';
     text-align: center;
 }
+
+#selectCategoriaProducto option {
+    font-family: 'Montserrat';
+}

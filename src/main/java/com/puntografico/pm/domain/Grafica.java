@@ -55,4 +55,16 @@ public class Grafica {
     private double precioColocacion;
 
     private String otros;
+
+    private int cantidad;
+
+    private double total;
+
+    private double abonado;
+
+    private double resta;
+
+    private String enlaceArchivo;
+
+    private String detalle;
 }

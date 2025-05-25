@@ -19,4 +19,16 @@ public class OtroProducto {
     private CategoriaProducto categoriaProducto;
 
     private String trabajoARealizar;
+
+    private int cantidad;
+
+    private double total;
+
+    private double abonado;
+
+    private double resta;
+
+    private String enlaceArchivo;
+
+    private String detalle;
 }

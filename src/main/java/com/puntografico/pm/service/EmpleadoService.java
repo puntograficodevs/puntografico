@@ -20,4 +20,8 @@ public class EmpleadoService {
     public Optional<Empleado> traerSegunUsername(String username) {
         return empleadoRepository.findByUsername(username);
     }
+
+    public Empleado buscarPorId(Long id) {
+        return empleadoRepository.findById(id).get();
+    }
 }

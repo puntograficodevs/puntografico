@@ -17,21 +17,15 @@ public class HomeController {
     @Autowired
     private EmpleadoService empleadoService;
 
-    @Autowired
-    private CategoriaProductoService categoriaProductoService;
-
     @GetMapping("/home")
     public String home(@RequestParam(required = false) String key, @RequestParam(required = false) String username, Model model) {
         if (key == null || !key.equals("asdghaer123riuhy12o34y12fh")) {
             return "redirect:/";
         }
-
         Empleado empleado = empleadoService.traerSegunUsername(username).get();
-        List<CategoriaProducto> productos = categoriaProductoService.buscarTodos();
 
         model.addAttribute("empleado", empleado);
         model.addAttribute("nombreEmpleado", formatearNombre(empleado.getNombre()));
-        model.addAttribute("productos", productos);
         return "home";
     }
 

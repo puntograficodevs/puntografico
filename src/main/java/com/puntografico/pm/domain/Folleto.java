@@ -37,4 +37,16 @@ public class Folleto {
     private CantidadEstandar cantidadEstandar;
 
     private int cantidadOtro;
+
+    private int cantidad;
+
+    private double total;
+
+    private double abonado;
+
+    private double resta;
+
+    private String enlaceArchivo;
+
+    private String detalle;
 }

@@ -37,4 +37,16 @@ public class Impresion {
     private TipoPapelImpresion tipoPapelImpresion;
 
     private int gramajeEspecial;
+
+    private int cantidad;
+
+    private double total;
+
+    private double abonado;
+
+    private double resta;
+
+    private String enlaceArchivo;
+
+    private String detalle;
 }

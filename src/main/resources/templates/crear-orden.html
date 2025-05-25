@@ -9,37 +9,124 @@
 </head>
 <body>
     <!--BARRA DE NAVEGACIÓN-->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <a class="navbar-brand" th:href="@{/home(key='asdghaer123riuhy12o34y12fh', username=${empleado.username})}">Punto Gráfico</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" th:href="@{/crear-orden(key='asdghaer123riuhy12o34y12fh', username=${empleado.username})}">Crear orden</a>
-                    </li>
+    <div th:replace="fragments/navbar :: navbar"></div>
 
-                </ul>
-                <p class="text-primary">¡Bienvenido, <span th:text="${nombreEmpleado}"></span></span>!</p>
+    <div class="container-fluid d-flex align-items-center justify-content-center mb-4 mt-4">
+
+        <form class="d-flex flex-column w-100 position-relative"
+              style="max-width: 80%;"
+              th:action="@{/guardar-orden}" method="post">
+
+            <!-- Empleado -->
+            <input type="hidden" name="empleadoId" th:value="${empleado.id}" />
+
+            <!-- Cliente Nombre -->
+            <label for="clienteNombre">Nombre del cliente *</label>
+            <input type="text" class="form-control mb-3" name="clienteNombre" id="clienteNombre" required />
+
+            <!-- Cliente Teléfono -->
+            <label for="clienteTelefono">Teléfono *</label>
+            <input type="text" class="form-control mb-3" name="clienteTelefono" id="clienteTelefono" required />
+
+            <!-- Categoría Producto -->
+            <label for="categoriaProducto">Categoría del producto</label>
+            <select class="form-control mb-3"
+                    name="categoriaProductoId"
+                    id="categoriaProducto"
+                    onchange="buscarProductoAsociado()"
+                    required>
+                <option value="">-- Seleccioná un tipo --</option>
+                <option th:each="categoria : ${categoriasProductos}"
+                        th:value="${categoria.idCategoriaProducto}"
+                        th:text="${categoria.nombre}"></option>
+            </select>
+
+            <!--FORMULARIO PAPELERIA-->
+            <div class="d-flex flex-column w-100 position-relative d-none"
+                  id="form-papeleria"
+                  style="max-width: 80%;">
+
+                <!-- Tipo Color -->
+                <label for="tipoColor">Tipo de color</label>
+                <select class="form-control mb-3" name="tipoColor" id="tipoColor">
+                    <option value="">-- Seleccionar --</option>
+                    <option th:each="tipoColor : ${T(com.puntografico.pm.enums.TipoColor).values()}"
+                            th:value="${tipoColor}" th:text="${tipoColor}">
+                    </option>
+                </select>
+
+                <!-- Tipo Papeleria -->
+                <label for="tipoPapeleria">Tipo de papelería</label>
+                <select class="form-control mb-3" name="tipoPapeleria" id="tipoPapeleria">
+                    <option value="">-- Seleccionar --</option>
+                    <option th:each="tipoPapeleria : ${T(com.puntografico.pm.enums.TipoPapeleria).values()}"
+                            th:value="${tipoPapeleria}" th:text="${tipoPapeleria}">
+                    </option>
+                </select>
+
+                <!-- Detalle Otro -->
+                <label for="detalleOtro">Detalle (si eligió otro tipo)</label>
+                <input type="text" class="form-control mb-3" name="detalleOtro" id="detalleOtro" />
+
+                <!-- Medida -->
+                <label for="medida">Medida</label>
+                <input type="text" class="form-control mb-3" name="medida" id="medida" />
+
+                <!-- Enlace Archivo -->
+                <label for="enlaceArchivo">Enlace al archivo</label>
+                <input type="text" class="form-control mb-3" name="enlaceArchivo" id="enlaceArchivo" />
+
+                <!-- Detalle -->
+                <label for="detalle">Detalle adicional</label>
+                <input type="text" class="form-control mb-3" name="detalle" id="detalle" />
+
+                <!-- Cantidad -->
+                <label for="cantidad">Cantidad</label>
+                <input type="number" class="form-control mb-3" name="cantidad" id="cantidad" />
+
+                <!-- Total -->
+                <label for="total">Total</label>
+                <input type="number" class="form-control mb-3" name="total" id="total" />
+
+                <!-- Abonado -->
+                <label for="abonado">Abonado</label>
+                <input type="number" class="form-control mb-3" name="abonado" id="abonado" />
+
+                <!-- Resta -->
+                <label for="resta">Resta</label>
+                <input type="number" class="form-control mb-3" name="resta" id="resta" readOnly />
+
+                <!-- Botón -->
+                <button type="button" id="btnAgregarPapeleria" class="btn btn-primary mt-2">Agregar producto a la orden</button>
             </div>
-        </div>
-    </nav>
 
-    <!--SELECTOR DE TIPO-->
-    <h6>¿A qué categoría pertenece?</h6>
-    <div class="formulario-creacion-ordenes">
-        <select id="selectCategoriaProducto"
-                name="categoriaProducto"
-                class="form-control mb-3"
-                onchange="mostrarCategoriaSeleccionada()" required>
-            <option value="">-- Seleccioná un tipo --</option>
-            <option th:each="categoria : ${categoriasProductos}"
-                    th:value="${categoria.idCategoriaProducto}"
-                    th:text="${categoria.nombre}"></option>
-        </select>
+            <!-- Medio de Pago -->
+            <label for="medioPago">Medio de pago (opcional)</label>
+            <select class="form-control mb-3" name="medioPago" id="medioPago">
+                <option value="">-- Seleccionar --</option>
+                <option th:each="medio : ${T(com.puntografico.pm.enums.MedioPago).values()}"
+                        th:value="${medio}" th:text="${medio}"></option>
+            </select>
+
+            <!-- Fecha Muestra -->
+            <label for="fechaMuestra">Fecha de muestra</label>
+            <input type="date" class="form-control mb-3" name="fechaMuestra" id="fechaMuestra" />
+
+            <!-- Fecha Entrega -->
+            <label for="fechaEntrega">Fecha de entrega *</label>
+            <input type="date" class="form-control mb-3" name="fechaEntrega" id="fechaEntrega" required />
+
+            <!-- Hora Entrega -->
+            <label for="horaEntrega">Hora de entrega</label>
+            <input type="time" class="form-control mb-3" name="horaEntrega" id="horaEntrega" />
+
+            <input type="hidden" name="papeleriaId" id="papeleriaId">
+
+            <!-- Botón -->
+            <button type="submit" class="btn btn-primary mt-3">Guardar orden</button>
+        </form>
     </div>
+
 </body>
 <script src="/js/crear-orden.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
