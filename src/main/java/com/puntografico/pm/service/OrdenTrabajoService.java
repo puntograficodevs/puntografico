@@ -8,7 +8,10 @@ import com.puntografico.pm.repository.OrdenTrabajoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.Normalizer;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrdenTrabajoService {
@@ -19,9 +22,53 @@ public class OrdenTrabajoService {
     @Autowired
     private PapeleriaService papeleriaService;
 
+    public List<OrdenTrabajo> buscarPorIdClienteNombreOClienteTelefono(String tipo, String valor) {
+        List<OrdenTrabajo> ordenes;
+
+        if (tipo.equalsIgnoreCase("ID")) {
+            try {
+                Long id = Long.parseLong(valor);
+                ordenes = ordenTrabajoRepository.findAllById(id);
+            } catch (NumberFormatException e) {
+                return List.of();
+            }
+        } else if (tipo.equalsIgnoreCase("NOMBRE")) {
+            String valorNormalizado = normalizar(valor);
+            ordenes = ordenTrabajoRepository.findAll().stream()
+                    .filter(o -> normalizar(o.getClienteNombre()).contains(valorNormalizado))
+                    .collect(Collectors.toList());
+        } else if (tipo.equalsIgnoreCase("TELEFONO")) {
+            ordenes = ordenTrabajoRepository.findAllByClienteTelefono(valor);
+        } else {
+            ordenes = List.of();
+        }
+
+        return ordenes;
+    }
     public OrdenTrabajo guardar(OrdenTrabajo ordenTrabajo) {
+        String nombre = ordenTrabajo.getClienteNombre();
+        ordenTrabajo.setClienteNombre(normalizar(nombre));
         agregarFechaPedidoEstadoPagoYEstadoOrden(ordenTrabajo);
         return ordenTrabajoRepository.save(ordenTrabajo);
+    }
+
+    private String normalizar(String texto) {
+        if (texto == null || texto.isBlank()) return "";
+        // Quitar tildes y pasar a lowercase
+        String sinTildes = Normalizer.normalize(texto, Normalizer.Form.NFD)
+                .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
+                .toLowerCase();
+
+        // Capitalizar primera letra de cada palabra
+        String[] palabras = sinTildes.split("\\s+");
+        StringBuilder resultado = new StringBuilder();
+        for (String palabra : palabras) {
+            if (palabra.isEmpty()) continue;
+            resultado.append(Character.toUpperCase(palabra.charAt(0)))
+                    .append(palabra.substring(1))
+                    .append(" ");
+        }
+        return resultado.toString().trim();
     }
 
     private void agregarFechaPedidoEstadoPagoYEstadoOrden(OrdenTrabajo ordenTrabajo) {

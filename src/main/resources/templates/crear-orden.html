@@ -13,8 +13,8 @@
 
     <div class="container-fluid d-flex align-items-center justify-content-center mb-4 mt-4">
 
-        <form class="d-flex flex-column w-100 position-relative"
-              style="max-width: 80%;"
+        <form class="d-flex flex-column w-100 position-relative needs-validation"
+              style="max-width: 80%;" novalidate
               th:action="@{/guardar-orden}" method="post">
 
             <!-- Empleado -->
@@ -23,13 +23,17 @@
             <!-- Cliente Nombre -->
             <label for="clienteNombre">Nombre del cliente *</label>
             <input type="text" class="form-control mb-3" name="clienteNombre" id="clienteNombre" required />
-
+            <div class="invalid-feedback">
+                Ingresa un nombre válido.
+            </div>
             <!-- Cliente Teléfono -->
             <label for="clienteTelefono">Teléfono *</label>
             <input type="text" class="form-control mb-3" name="clienteTelefono" id="clienteTelefono" required />
-
+            <div class="invalid-feedback">
+                Ingresa un número válido.
+            </div>
             <!-- Categoría Producto -->
-            <label for="categoriaProducto">Categoría del producto</label>
+            <label for="categoriaProducto">Categoría del producto *</label>
             <select class="form-control mb-3"
                     name="categoriaProductoId"
                     id="categoriaProducto"
@@ -40,6 +44,9 @@
                         th:value="${categoria.idCategoriaProducto}"
                         th:text="${categoria.nombre}"></option>
             </select>
+            <div class="invalid-feedback">
+                Elegí una categoría de producto.
+            </div>
 
             <!--FORMULARIO PAPELERIA-->
             <div class="d-flex flex-column w-100 position-relative d-none"
@@ -47,7 +54,7 @@
                   style="max-width: 80%;">
 
                 <!-- Tipo Color -->
-                <label for="tipoColor">Tipo de color</label>
+                <label for="tipoColor">Tipo de color *</label>
                 <select class="form-control mb-3" name="tipoColor" id="tipoColor">
                     <option value="">-- Seleccionar --</option>
                     <option th:each="tipoColor : ${T(com.puntografico.pm.enums.TipoColor).values()}"
@@ -56,7 +63,7 @@
                 </select>
 
                 <!-- Tipo Papeleria -->
-                <label for="tipoPapeleria">Tipo de papelería</label>
+                <label for="tipoPapeleria">Tipo de papelería *</label>
                 <select class="form-control mb-3" name="tipoPapeleria" id="tipoPapeleria">
                     <option value="">-- Seleccionar --</option>
                     <option th:each="tipoPapeleria : ${T(com.puntografico.pm.enums.TipoPapeleria).values()}"
@@ -69,7 +76,7 @@
                 <input type="text" class="form-control mb-3" name="detalleOtro" id="detalleOtro" />
 
                 <!-- Medida -->
-                <label for="medida">Medida</label>
+                <label for="medida">Medidas *</label>
                 <input type="text" class="form-control mb-3" name="medida" id="medida" />
 
                 <!-- Enlace Archivo -->
@@ -77,20 +84,20 @@
                 <input type="text" class="form-control mb-3" name="enlaceArchivo" id="enlaceArchivo" />
 
                 <!-- Detalle -->
-                <label for="detalle">Detalle adicional</label>
+                <label for="detalle">Info. adicional</label>
                 <input type="text" class="form-control mb-3" name="detalle" id="detalle" />
 
                 <!-- Cantidad -->
-                <label for="cantidad">Cantidad</label>
-                <input type="number" class="form-control mb-3" name="cantidad" id="cantidad" />
+                <label for="cantidad">Cantidad *</label>
+                <input type="number" class="form-control mb-3" name="cantidad" id="cantidad"/>
 
                 <!-- Total -->
-                <label for="total">Total</label>
+                <label for="total">Total *</label>
                 <input type="number" class="form-control mb-3" name="total" id="total" />
 
                 <!-- Abonado -->
-                <label for="abonado">Abonado</label>
-                <input type="number" class="form-control mb-3" name="abonado" id="abonado" />
+                <label for="abonado">Abonado *</label>
+                <input type="number" class="form-control mb-3" name="abonado" id="abonado"/>
 
                 <!-- Resta -->
                 <label for="resta">Resta</label>
@@ -101,7 +108,7 @@
             </div>
 
             <!-- Medio de Pago -->
-            <label for="medioPago">Medio de pago (opcional)</label>
+            <label for="medioPago">Medio de pago</label>
             <select class="form-control mb-3" name="medioPago" id="medioPago">
                 <option value="">-- Seleccionar --</option>
                 <option th:each="medio : ${T(com.puntografico.pm.enums.MedioPago).values()}"
@@ -115,7 +122,9 @@
             <!-- Fecha Entrega -->
             <label for="fechaEntrega">Fecha de entrega *</label>
             <input type="date" class="form-control mb-3" name="fechaEntrega" id="fechaEntrega" required />
-
+            <div class="invalid-feedback">
+                Ingresá una fecha válida.
+            </div>
             <!-- Hora Entrega -->
             <label for="horaEntrega">Hora de entrega</label>
             <input type="time" class="form-control mb-3" name="horaEntrega" id="horaEntrega" />

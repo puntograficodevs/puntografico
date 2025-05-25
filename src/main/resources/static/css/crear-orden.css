@@ -11,3 +11,8 @@ h6 {
 #selectCategoriaProducto option {
     font-family: 'Montserrat';
 }
+
+.valid-feedback, .invalid-feedback {
+    margin-top: -0.5rem;
+    margin-bottom: 0.5rem;
+}

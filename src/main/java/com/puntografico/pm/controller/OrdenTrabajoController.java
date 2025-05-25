@@ -71,4 +71,9 @@ public class OrdenTrabajoController {
 
         return "redirect:/home?key=asdghaer123riuhy12o34y12fh&username=" + empleado.getUsername();
     }
+
+    @GetMapping("/buscar-orden")
+    public List<OrdenTrabajo> buscar(@RequestParam String tipo, @RequestParam String valor) {
+        return ordenTrabajoService.buscarPorIdClienteNombreOClienteTelefono(tipo, valor);
+    }
 }
