@@ -1,0 +1,24 @@
+<table border="1"
+       style="width: 80%; border-collapse: collapse; margin: 2rem auto;"
+       th:fragment="tablaOrdenesFragment"
+       xmlns:th="http://www.w3.org/1999/xhtml">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Teléfono</th>
+        <th>Estado</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="orden : ${ordenes}">
+        <td th:text="${orden.id}"></td>
+        <td th:text="${orden.clienteNombre}"></td>
+        <td th:text="${orden.clienteTelefono}"></td>
+        <td th:text="${orden.estadoOrden}"></td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(ordenes)}">
+        <td colspan="4">No se encontraron órdenes</td>
+    </tr>
+    </tbody>
+</table>

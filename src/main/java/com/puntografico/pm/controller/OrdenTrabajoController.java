@@ -11,10 +11,7 @@ import com.puntografico.pm.service.PapeleriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -44,6 +41,7 @@ public class OrdenTrabajoController {
         Empleado empleado = empleadoService.traerSegunUsername(username).get();
         List<CategoriaProducto> categoriasProductos = categoriaProductoService.buscarTodos();
 
+        model.addAttribute("nombreEmpleado", formatearNombre(empleado.getNombre()));
         model.addAttribute("empleado", empleado);
         model.addAttribute("categoriasProductos", categoriasProductos);
         return "crear-orden";
@@ -72,8 +70,33 @@ public class OrdenTrabajoController {
         return "redirect:/home?key=asdghaer123riuhy12o34y12fh&username=" + empleado.getUsername();
     }
 
-    @GetMapping("/buscar-orden")
-    public List<OrdenTrabajo> buscar(@RequestParam String tipo, @RequestParam String valor) {
+    /*@GetMapping("/buscar-orden")
+    @ResponseBody
+    public List<OrdenTrabajo> buscar(@RequestParam String tipo,
+                                     @RequestParam String valor,
+                                     @RequestParam String key) {
+        if (key == null || !key.equals("asdghaer123riuhy12o34y12fh")) {
+            return List.of();
+        }
+
         return ordenTrabajoService.buscarPorIdClienteNombreOClienteTelefono(tipo, valor);
+    }*/
+
+    @GetMapping("/buscar-orden")
+    public String buscarOrdenes(@RequestParam String tipo,
+                                @RequestParam String valor,
+                                @RequestParam String key,
+                                Model model) {
+        if (key == null || !key.equals("asdghaer123riuhy12o34y12fh")) {
+            return "fragments/tabla-ordenes :: tablaOrdenesFragment"; // vacía o con mensaje
+        }
+
+        List<OrdenTrabajo> ordenes = ordenTrabajoService.buscarPorIdClienteNombreOClienteTelefono(tipo, valor);
+        model.addAttribute("ordenes", ordenes);
+        return "fragments/tabla-ordenes :: tablaOrdenesFragment";
+    }
+
+    private String formatearNombre(String nombre){
+        return nombre.substring(0,1).toUpperCase() + nombre.substring(1).toLowerCase();
     }
 }

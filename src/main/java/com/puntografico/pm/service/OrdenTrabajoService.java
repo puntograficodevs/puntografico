@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,15 +29,14 @@ public class OrdenTrabajoService {
         if (tipo.equalsIgnoreCase("ID")) {
             try {
                 Long id = Long.parseLong(valor);
-                ordenes = ordenTrabajoRepository.findAllById(id);
+                Optional<OrdenTrabajo> ordenOpcional = ordenTrabajoRepository.findById(id);
+                ordenes = ordenOpcional.map(List::of).orElseGet(List::of);
             } catch (NumberFormatException e) {
                 return List.of();
             }
         } else if (tipo.equalsIgnoreCase("NOMBRE")) {
-            String valorNormalizado = normalizar(valor);
-            ordenes = ordenTrabajoRepository.findAll().stream()
-                    .filter(o -> normalizar(o.getClienteNombre()).contains(valorNormalizado))
-                    .collect(Collectors.toList());
+            String nombreNormalizado = normalizar(valor);
+            ordenes = ordenTrabajoRepository.findAllByClienteNombre(nombreNormalizado);
         } else if (tipo.equalsIgnoreCase("TELEFONO")) {
             ordenes = ordenTrabajoRepository.findAllByClienteTelefono(valor);
         } else {

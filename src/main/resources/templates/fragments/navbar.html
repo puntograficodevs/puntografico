@@ -10,7 +10,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" th:href="@{/crear-orden(key='asdghaer123riuhy12o34y12fh', username=${empleado.username})}">Crear orden</a>
                 </li>
-
+            </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="@{/buscador(key='asdghaer123riuhy12o34y12fh', username=${empleado.username})}">Buscador</a>
+                </li>
             </ul>
             <p class="text-primary">¡Bienvenido, <span th:text="${nombreEmpleado}"></span></span>!</p>
         </div>

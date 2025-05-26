@@ -1,5 +1,6 @@
 package com.puntografico.pm.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.puntografico.pm.enums.EstadoOrden;
 import com.puntografico.pm.enums.EstadoPago;
 import com.puntografico.pm.enums.MedioPago;
