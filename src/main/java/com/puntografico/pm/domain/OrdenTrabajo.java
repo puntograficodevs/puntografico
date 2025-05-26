@@ -55,44 +55,4 @@ public class OrdenTrabajo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_papeleria")
     private Papeleria papeleria;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_etiqueta_sticker")
-    private EtiquetaSticker etiquetaSticker;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_folleto")
-    private Folleto folleto;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_grafica")
-    private Grafica grafica;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_impresion")
-    private Impresion impresion;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_otro_producto")
-    private OtroProducto otroProducto;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_sello")
-    private Sello sello;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_sublimacion")
-    private Sublimacion sublimacion;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_talonario")
-    private Talonario talonario;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_tarjeta")
-    private Tarjeta tarjeta;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_vinilo")
-    private Vinilo vinilo;
 }
