@@ -20,120 +20,181 @@
             <!-- Empleado -->
             <input type="hidden" name="empleadoId" th:value="${empleado.id}" />
 
-            <!-- Cliente Nombre -->
-            <label for="clienteNombre">Nombre del cliente *</label>
-            <input type="text" class="form-control mb-3" name="clienteNombre" id="clienteNombre" required />
-            <div class="invalid-feedback">
-                Ingresa un nombre válido.
-            </div>
-            <!-- Cliente Teléfono -->
-            <label for="clienteTelefono">Teléfono *</label>
-            <input type="text" class="form-control mb-3" name="clienteTelefono" id="clienteTelefono" required />
-            <div class="invalid-feedback">
-                Ingresa un número válido.
-            </div>
-            <!-- Categoría Producto -->
-            <label for="categoriaProducto">Categoría del producto *</label>
-            <select class="form-control mb-3"
-                    name="categoriaProductoId"
-                    id="categoriaProducto"
-                    onchange="buscarProductoAsociado()"
-                    required>
-                <option value="">-- Seleccioná un tipo --</option>
-                <option th:each="categoria : ${categoriasProductos}"
-                        th:value="${categoria.idCategoriaProducto}"
-                        th:text="${categoria.nombre}"></option>
-            </select>
-            <div class="invalid-feedback">
-                Elegí una categoría de producto.
+            <!-- Fila: Cliente Nombre, Cliente Teléfono, Cuenta Corriente -->
+            <div class="row">
+                <div class="col-md-5 mb-3">
+                    <label for="clienteNombre">Nombre del cliente *</label>
+                    <input type="text" class="form-control" name="clienteNombre" id="clienteNombre" required />
+                    <div class="invalid-feedback">Ingresa un nombre válido.</div>
+                </div>
+                <div class="col-md-5 mb-3">
+                    <label for="clienteTelefono">Teléfono *</label>
+                    <input type="text" class="form-control" name="clienteTelefono" id="clienteTelefono" required />
+                    <div class="invalid-feedback">Ingresa un número válido.</div>
+                </div>
+                <div class="col-md-2 mb-3 d-flex align-items-end">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="esCuentaCorriente" id="esCuentaCorriente">
+                        <label class="form-check-label" for="esCuentaCorriente">
+                            Cuenta corriente
+                        </label>
+                    </div>
+                </div>
             </div>
 
-            <!--FORMULARIO PAPELERIA-->
-            <div class="d-flex flex-column w-100 position-relative d-none"
-                  id="form-papeleria"
-                  style="max-width: 80%;">
-
-                <!-- Tipo Color -->
-                <label for="tipoColor">Tipo de color *</label>
-                <select class="form-control mb-3" name="tipoColor" id="tipoColor">
-                    <option value="">-- Seleccionar --</option>
-                    <option th:each="tipoColor : ${T(com.puntografico.pm.enums.TipoColor).values()}"
-                            th:value="${tipoColor}" th:text="${tipoColor}">
-                    </option>
-                </select>
-
-                <!-- Tipo Papeleria -->
-                <label for="tipoPapeleria">Tipo de papelería *</label>
-                <select class="form-control mb-3" name="tipoPapeleria" id="tipoPapeleria">
-                    <option value="">-- Seleccionar --</option>
-                    <option th:each="tipoPapeleria : ${T(com.puntografico.pm.enums.TipoPapeleria).values()}"
-                            th:value="${tipoPapeleria}" th:text="${tipoPapeleria}">
-                    </option>
-                </select>
-
-                <!-- Detalle Otro -->
-                <label for="detalleOtro">Detalle (si eligió otro tipo)</label>
-                <input type="text" class="form-control mb-3" name="detalleOtro" id="detalleOtro" />
-
-                <!-- Medida -->
-                <label for="medida">Medidas *</label>
-                <input type="text" class="form-control mb-3" name="medida" id="medida" />
-
-                <!-- Enlace Archivo -->
-                <label for="enlaceArchivo">Enlace al archivo</label>
-                <input type="text" class="form-control mb-3" name="enlaceArchivo" id="enlaceArchivo" />
-
-                <!-- Detalle -->
-                <label for="detalle">Info. adicional</label>
-                <input type="text" class="form-control mb-3" name="detalle" id="detalle" />
-
-                <!-- Cantidad -->
-                <label for="cantidad">Cantidad *</label>
-                <input type="number" class="form-control mb-3" name="cantidad" id="cantidad"/>
-
-                <!-- Total -->
-                <label for="total">Total *</label>
-                <input type="number" class="form-control mb-3" name="total" id="total" />
-
-                <!-- Abonado -->
-                <label for="abonado">Abonado *</label>
-                <input type="number" class="form-control mb-3" name="abonado" id="abonado"/>
-
-                <!-- Resta -->
-                <label for="resta">Resta</label>
-                <input type="number" class="form-control mb-3" name="resta" id="resta" readOnly />
-
-                <!-- Botón -->
-                <button type="button" id="btnAgregarPapeleria" class="btn btn-primary mt-2">Agregar producto a la orden</button>
+            <!-- Fila: Categoría Producto -->
+            <div class="row">
+                <div class="col-12 mb-3">
+                    <label for="categoriaProducto">Categoría del producto *</label>
+                    <select class="form-control"
+                            name="categoriaProductoId"
+                            id="categoriaProducto"
+                            onchange="buscarProductoAsociado()"
+                            required>
+                        <option value="">-- Seleccioná un tipo --</option>
+                        <option th:each="categoria : ${categoriasProductos}"
+                                th:value="${categoria.idCategoriaProducto}"
+                                th:text="${categoria.nombre}"></option>
+                    </select>
+                    <div class="invalid-feedback">Elegí una categoría de producto.</div>
+                </div>
             </div>
 
-            <!-- Medio de Pago -->
-            <label for="medioPago">Medio de pago</label>
-            <select class="form-control mb-3" name="medioPago" id="medioPago">
-                <option value="">-- Seleccionar --</option>
-                <option th:each="medio : ${T(com.puntografico.pm.enums.MedioPago).values()}"
-                        th:value="${medio}" th:text="${medio}"></option>
-            </select>
+            <!-- Fila: Formulario Etiqueta -->
+            <div class="d-flex flex-column w-100 position-relative d-none" id="form-etiqueta" style="max-width: 80%;">
+                <!-- Tipo Papel Etiquetas -->
+                <div class="mb-3">
+                    <label class="form-label">Tipo de papel *</label>
+                    <div th:each="tipo : ${T(com.puntografico.pm.enums.TipoPapelEtiquetas).values()}">
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input tipo-papel-checkbox"
+                                   th:id="${'tipoPapel_' + tipo}"
+                                   th:name="tipoPapelEtiquetas"
+                                   th:value="${tipo}" />
+                            <label class="form-check-label"
+                                   th:for="${'tipoPapel_' + tipo}"
+                                   th:text="${tipo}"></label>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- Fecha Muestra -->
-            <label for="fechaMuestra">Fecha de muestra</label>
-            <input type="date" class="form-control mb-3" name="fechaMuestra" id="fechaMuestra" />
+                <div class="row mb-3">
+                    <!-- Tipo Laminado -->
+                    <div class="col-md-8">
+                        <label class="form-label">Tipo de laminado *</label>
+                        <div th:each="laminado : ${T(com.puntografico.pm.enums.TipoLaminado).values()}" class="form-check form-check-inline">
+                            <input type="checkbox"
+                                   class="form-check-input tipo-laminado-checkbox"
+                                   th:id="${'tipoLaminado_' + laminado}"
+                                   th:name="tipoLaminado"
+                                   th:value="${laminado}" />
+                            <label class="form-check-label"
+                                   th:for="${'tipoLaminado_' + laminado}"
+                                   th:text="${laminado}"></label>
+                        </div>
+                    </div>
 
-            <!-- Fecha Entrega -->
-            <label for="fechaEntrega">Fecha de entrega *</label>
-            <input type="date" class="form-control mb-3" name="fechaEntrega" id="fechaEntrega" required />
-            <div class="invalid-feedback">
-                Ingresá una fecha válida.
+                    <!-- Con Perforación -->
+                    <div class="col-md-4 d-flex align-items-center">
+                        <div class="form-check">
+                            <input type="checkbox"
+                                   class="form-check-input"
+                                   id="conPerforacion"
+                                   name="conPerforacion"
+                                   value="true" />
+                            <label class="form-check-label" for="conPerforacion">Perforación</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- Medida -->
+                    <div class="col-md-6">
+                        <label for="medida" class="form-label">Medida *</label>
+                        <input type="text" class="form-control" id="medida" name="medida" required />
+                    </div>
+
+                    <!-- Cantidad -->
+                    <div class="col-md-6">
+                        <label for="cantidad" class="form-label">Cantidad *</label>
+                        <input type="number" class="form-control" id="cantidad" name="cantidad" required />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- Archivo -->
+                    <div class="col-md-6">
+                        <label for="archivo" class="form-label">Archivo</label>
+                        <input type="text" class="form-control" id="archivo" name="archivo" />
+                    </div>
+
+                    <!-- Detalle -->
+                    <div class="col-md-6">
+                        <label for="detalle" class="form-label">Detalle</label>
+                        <input type="text" class="form-control" id="detalle" name="detalle" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <!-- Total -->
+                    <div class="col-md-4">
+                        <label for="total" class="form-label">Total *</label>
+                        <input type="number" class="form-control" id="total" name="total" step="0.01" required />
+                    </div>
+
+                    <!-- Abonado -->
+                    <div class="col-md-4">
+                        <label for="abonado" class="form-label">Abonado *</label>
+                        <input type="number" class="form-control" id="abonado" name="abonado" step="0.01" required />
+                    </div>
+
+                    <!-- Resta -->
+                    <div class="col-md-4">
+                        <label for="resta" class="form-label">Resta</label>
+                        <input type="number" class="form-control" id="resta" name="resta" readonly />
+                    </div>
+                </div>
+
+                <button type="button" id="btnAgregarEtiqueta" class="btn btn-secondary mt-2">Agregar producto a la orden</button>
             </div>
-            <!-- Hora Entrega -->
-            <label for="horaEntrega">Hora de entrega</label>
-            <input type="time" class="form-control mb-3" name="horaEntrega" id="horaEntrega" />
 
-            <input type="hidden" name="papeleriaId" id="papeleriaId">
+            <!-- Fila: Fecha Muestra y Medio de Pago -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="fechaMuestra">Fecha de muestra</label>
+                    <input type="date" class="form-control" name="fechaMuestra" id="fechaMuestra" />
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="medioPago">Medio de pago</label>
+                    <select class="form-control" name="medioPago" id="medioPago">
+                        <option value="">-- Seleccionar --</option>
+                        <option th:each="medio : ${T(com.puntografico.pm.enums.MedioPago).values()}"
+                                th:value="${medio}" th:text="${medio}"></option>
+                    </select>
+                </div>
+            </div>
 
-            <!-- Botón -->
+            <!-- Fila: Fecha Entrega y Hora Entrega -->
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="fechaEntrega">Fecha de entrega *</label>
+                    <input type="date" class="form-control" name="fechaEntrega" id="fechaEntrega" required />
+                    <div class="invalid-feedback">Ingresá una fecha válida.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="horaEntrega">Hora de entrega</label>
+                    <input type="time" class="form-control" name="horaEntrega" id="horaEntrega" />
+                </div>
+            </div>
+
+            <!-- Campo oculto para ID de etiqueta -->
+            <input type="hidden" name="etiquetaId" id="etiquetaId">
+
+            <!-- Botón de envío -->
             <button type="submit" class="btn btn-primary mt-3">Guardar orden</button>
         </form>
+
     </div>
 
 </body>

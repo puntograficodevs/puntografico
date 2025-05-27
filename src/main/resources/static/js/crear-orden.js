@@ -2,12 +2,12 @@ function buscarProductoAsociado() {
     const selectorDeCategoria = document.getElementById("categoriaProducto");
     const idCategoria = selectorDeCategoria.options[selectorDeCategoria.selectedIndex].value;
 
-    if (idCategoria == 2) {
-        const formularioPapeleria = document.getElementById("form-papeleria");
-        formularioPapeleria.classList.remove("d-none");
+    if (idCategoria == 12) {
+        const formularioEtiqueta = document.getElementById("form-etiqueta");
+        formularioEtiqueta.classList.remove("d-none");
     } else {
-        formularioPapeleria.classList.add("d-none");
-        document.getElementById("papeleriaId").value = "";
+        formularioEtiqueta.classList.add("d-none");
+        document.getElementById("etiquetaId").value = "";
     }
 }
 
@@ -27,16 +27,16 @@ function calcularResta() {
 document.addEventListener("DOMContentLoaded", function () {
     const totalInput = document.getElementById('total');
     const abonadoInput = document.getElementById('abonado');
-    const btnAgregarPapeleria = document.getElementById('btnAgregarPapeleria');
+    const btnAgregarEtiqueta = document.getElementById('btnAgregarEtiqueta');
 
     if (totalInput && abonadoInput) {
         totalInput.addEventListener('input', calcularResta);
         abonadoInput.addEventListener('input', calcularResta);
     }
 
-    if (btnAgregarPapeleria) {
-        btnAgregarPapeleria.addEventListener('click', async function () {
-            const inputs = document.querySelectorAll("#form-papeleria input, #form-papeleria select");
+    if (btnAgregarEtiqueta) {
+        btnAgregarEtiqueta.addEventListener('click', async function () {
+            const inputs = document.querySelectorAll("#form-etiqueta input, #form-etiqueta select");
             const formData = new FormData();
             inputs.forEach(input => {
                 if (input.name) {
@@ -44,17 +44,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
 
-            const response = await fetch("/guardar-papeleria", {
+            const response = await fetch("/guardar-etiqueta", {
                 method: "POST",
                 body: formData
             });
 
             if (response.ok) {
                 const data = await response.json();
-                document.getElementById("papeleriaId").value = data.id;
-                alert("Producto de papelería agregado correctamente.");
+                document.getElementById("etiquetaId").value = data.id;
+                alert("Producto de etiqueta agregado correctamente.");
             } else {
-                alert("Error al guardar el producto de papelería.");
+                alert("Error al guardar el producto de etiqueta.");
             }
         });
     }

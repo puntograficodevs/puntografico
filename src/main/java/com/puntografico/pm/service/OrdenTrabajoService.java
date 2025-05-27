@@ -1,5 +1,6 @@
 package com.puntografico.pm.service;
 
+import com.puntografico.pm.domain.Etiqueta;
 import com.puntografico.pm.domain.OrdenTrabajo;
 import com.puntografico.pm.domain.Papeleria;
 import com.puntografico.pm.enums.EstadoOrden;
@@ -12,7 +13,6 @@ import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class OrdenTrabajoService {
@@ -21,7 +21,7 @@ public class OrdenTrabajoService {
     private OrdenTrabajoRepository ordenTrabajoRepository;
 
     @Autowired
-    private PapeleriaService papeleriaService;
+    private EtiquetaService etiquetaService;
 
     public List<OrdenTrabajo> buscarPorIdClienteNombreOClienteTelefono(String tipo, String valor) {
         List<OrdenTrabajo> ordenes;
@@ -99,9 +99,9 @@ public class OrdenTrabajoService {
     private double traerTotalDelProducto(OrdenTrabajo ordenTrabajo) {
         double total;
 
-        if (ordenTrabajo.getPapeleria() != null) {
-            Papeleria papeleria = papeleriaService.buscarPorId(ordenTrabajo.getPapeleria().getId());
-            total = papeleria.getTotal();
+        if (ordenTrabajo.getEtiqueta() != null) {
+            Etiqueta etiqueta = etiquetaService.buscarPorId(ordenTrabajo.getEtiqueta().getId());
+            total = etiqueta.getTotal();
         } else {
             total = 10.00;
         }
@@ -112,9 +112,9 @@ public class OrdenTrabajoService {
     private double traerAbonadoDelProducto(OrdenTrabajo ordenTrabajo) {
         double abonado;
 
-        if (ordenTrabajo.getPapeleria() != null) {
-            Papeleria papeleria = papeleriaService.buscarPorId(ordenTrabajo.getPapeleria().getId());
-            abonado = papeleria.getAbonado();
+        if (ordenTrabajo.getEtiqueta() != null) {
+            Etiqueta etiqueta = etiquetaService.buscarPorId(ordenTrabajo.getEtiqueta().getId());
+            abonado = etiqueta.getAbonado();
         } else {
             abonado = 10.00;
         }

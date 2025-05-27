@@ -28,6 +28,8 @@ public class OrdenTrabajo {
 
     private String clienteTelefono;
 
+    private boolean esCuentaCorriente;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaPedido;
 
@@ -52,7 +54,12 @@ public class OrdenTrabajo {
     @JoinColumn(name = "id_categoria_producto")
     private CategoriaProducto categoriaProducto;
 
+    //ESTO DESPUES SE VA BENCHU
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_papeleria")
     private Papeleria papeleria;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_etiqueta")
+    private Etiqueta etiqueta;
 }

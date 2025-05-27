@@ -1,20 +1,16 @@
 package com.puntografico.pm.controller;
 
-import com.puntografico.pm.domain.Empleado;
-import com.puntografico.pm.domain.CategoriaProducto;
-import com.puntografico.pm.domain.OrdenTrabajo;
-import com.puntografico.pm.domain.Papeleria;
+import com.puntografico.pm.domain.*;
 import com.puntografico.pm.service.EmpleadoService;
 import com.puntografico.pm.service.CategoriaProductoService;
 import com.puntografico.pm.service.OrdenTrabajoService;
-import com.puntografico.pm.service.PapeleriaService;
+import com.puntografico.pm.service.EtiquetaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -30,10 +26,10 @@ public class OrdenTrabajoController {
     private CategoriaProductoService categoriaProductoService;
 
     @Autowired
-    private PapeleriaService papeleriaService;
+    private EtiquetaService etiquetaService;
 
     @GetMapping("/crear-orden")
-    public String crearOrden(@RequestParam(required = false) String key, @RequestParam(required = false) String username, Model model) {
+    public String crear(@RequestParam(required = false) String key, @RequestParam(required = false) String username, Model model) {
         if (key == null || !key.equals("asdghaer123riuhy12o34y12fh")) {
             return "redirect:/";
         }
@@ -52,13 +48,13 @@ public class OrdenTrabajoController {
                           @ModelAttribute OrdenTrabajo ordenTrabajo,
                           @RequestParam Long empleadoId,
                           @RequestParam Integer categoriaProductoId,
-                          @RequestParam(required = false) Long papeleriaId) {
+                          @RequestParam(required = false) Long etiquetaId) {
 
         Empleado empleado = empleadoService.buscarPorId(empleadoId);
         CategoriaProducto categoriaProducto = categoriaProductoService.buscarPorId(categoriaProductoId);
-        if (papeleriaId != null) {
-            Papeleria papeleria = papeleriaService.buscarPorId(papeleriaId);
-            ordenTrabajo.setPapeleria(papeleria);
+        if (etiquetaId != null) {
+            Etiqueta etiqueta = etiquetaService.buscarPorId(etiquetaId);
+            ordenTrabajo.setEtiqueta(etiqueta);
         }
         ordenTrabajo.setEmpleado(empleado);
         ordenTrabajo.setCategoriaProducto(categoriaProducto);
@@ -69,18 +65,6 @@ public class OrdenTrabajoController {
 
         return "redirect:/home?key=asdghaer123riuhy12o34y12fh&username=" + empleado.getUsername();
     }
-
-    /*@GetMapping("/buscar-orden")
-    @ResponseBody
-    public List<OrdenTrabajo> buscar(@RequestParam String tipo,
-                                     @RequestParam String valor,
-                                     @RequestParam String key) {
-        if (key == null || !key.equals("asdghaer123riuhy12o34y12fh")) {
-            return List.of();
-        }
-
-        return ordenTrabajoService.buscarPorIdClienteNombreOClienteTelefono(tipo, valor);
-    }*/
 
     @GetMapping("/buscar-orden")
     public String buscarOrdenes(@RequestParam String tipo,
