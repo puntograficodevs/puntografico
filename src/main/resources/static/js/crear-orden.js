@@ -1,12 +1,28 @@
 function buscarProductoAsociado() {
     const selectorDeCategoria = document.getElementById("categoriaProducto");
-    const idCategoria = selectorDeCategoria.options[selectorDeCategoria.selectedIndex].value;
+    const idCategoria = selectorDeCategoria.value;
 
-    if (idCategoria == 12) {
-        const formularioEtiqueta = document.getElementById("form-etiqueta");
+    const formularioEtiqueta = document.getElementById("form-etiqueta");
+
+    if (idCategoria === "12") {
         formularioEtiqueta.classList.remove("d-none");
+
+        // Activo los required del formulario etiqueta
+        formularioEtiqueta.querySelectorAll("input, select").forEach(el => {
+            if (el.hasAttribute("required") || el.name === "medida" || el.name === "cantidad" || el.name === "total" || el.name === "abonado") {
+                el.required = true;
+            }
+        });
+
+        // Desactivo los required fuera del formulario etiqueta que no estén relacionados
+        // (Por ejemplo, acá no tocamos nada porque el form completo tiene otros required)
     } else {
         formularioEtiqueta.classList.add("d-none");
+
+        // Desactivo required en el formulario etiqueta
+        formularioEtiqueta.querySelectorAll("input, select").forEach(el => el.required = false);
+
+        // Limpio etiquetaId
         document.getElementById("etiquetaId").value = "";
     }
 }
@@ -24,7 +40,23 @@ function calcularResta() {
     }
 }
 
+function limitarCheckboxes(grupoClase) {
+    const checkboxes = document.querySelectorAll(`.${grupoClase}`);
+    checkboxes.forEach(chk => {
+        chk.addEventListener('change', () => {
+            if (chk.checked) {
+                // Desmarcar todos menos el que activó el cambio
+                checkboxes.forEach(otherChk => {
+                    if (otherChk !== chk) otherChk.checked = false;
+                });
+            }
+        });
+    });
+}
+
 document.addEventListener("DOMContentLoaded", function () {
+    buscarProductoAsociado(); // Por si hay un valor cargado al inicio
+
     const totalInput = document.getElementById('total');
     const abonadoInput = document.getElementById('abonado');
     const btnAgregarEtiqueta = document.getElementById('btnAgregarEtiqueta');
@@ -58,23 +90,25 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    // Limitar checkboxes en tipo papel y tipo laminado a uno solo
+    limitarCheckboxes('tipo-papel-checkbox');
+    limitarCheckboxes('tipo-laminado-checkbox');
 });
 
+// Bootstrap validation custom
 (() => {
   'use strict'
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
+  const forms = document.querySelectorAll('.needs-validation');
 
-  // Loop over them and prevent submission
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
       if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
+        event.preventDefault();
+        event.stopPropagation();
       }
-
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
+      form.classList.add('was-validated');
+    }, false);
+  });
+})();
