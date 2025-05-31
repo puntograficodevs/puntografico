@@ -1,10 +1,7 @@
 package com.puntografico.pm.controller;
 
 import com.puntografico.pm.domain.*;
-import com.puntografico.pm.service.EmpleadoService;
-import com.puntografico.pm.service.CategoriaProductoService;
-import com.puntografico.pm.service.OrdenTrabajoService;
-import com.puntografico.pm.service.EtiquetaService;
+import com.puntografico.pm.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +25,9 @@ public class OrdenTrabajoController {
     @Autowired
     private EtiquetaService etiquetaService;
 
+    @Autowired
+    private StickerService stickerService;
+
     @GetMapping("/crear-orden")
     public String crear(@RequestParam(required = false) String key, @RequestParam(required = false) String username, Model model) {
         if (key == null || !key.equals("asdghaer123riuhy12o34y12fh")) {
@@ -48,14 +48,20 @@ public class OrdenTrabajoController {
                           @ModelAttribute OrdenTrabajo ordenTrabajo,
                           @RequestParam Long empleadoId,
                           @RequestParam Integer categoriaProductoId,
-                          @RequestParam(required = false) Long etiquetaId) {
+                          @RequestParam(required = false) Long etiquetaId,
+                          @RequestParam(required = false) Long stickerId) {
 
         Empleado empleado = empleadoService.buscarPorId(empleadoId);
         CategoriaProducto categoriaProducto = categoriaProductoService.buscarPorId(categoriaProductoId);
+
         if (etiquetaId != null) {
             Etiqueta etiqueta = etiquetaService.buscarPorId(etiquetaId);
             ordenTrabajo.setEtiqueta(etiqueta);
+        } else if (stickerId != null) {
+            Sticker sticker = stickerService.buscarPorId(stickerId);
+            ordenTrabajo.setSticker(sticker);
         }
+
         ordenTrabajo.setEmpleado(empleado);
         ordenTrabajo.setCategoriaProducto(categoriaProducto);
 

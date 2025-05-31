@@ -16,3 +16,35 @@ h6 {
     margin-top: -0.5rem;
     margin-bottom: 0.5rem;
 }
+
+#form-crear-orden h6 {
+    text-align: left;
+}
+
+.form-section {
+    border-radius: 10px;
+    border: 1px solid lightgray;
+    padding: 1rem 2rem;
+}
+
+.form-section .col-6 {
+    width:40%;
+}
+
+#form-etiqueta {
+    align-items: center;
+}
+
+.tipo-papel div,
+.tipo-laminado div {
+    margin-bottom: 1rem;
+}
+
+label {
+    margin-bottom: .5rem;
+    font-weight: bold;
+}
+
+.form-check label {
+    font-weight: normal;
+}

@@ -8,63 +8,64 @@
     <title>Punto Gráfico</title>
 </head>
 <body>
-    <!--BARRA DE NAVEGACIÓN-->
-    <div th:replace="fragments/navbar :: navbar"></div>
+<!--BARRA DE NAVEGACIÓN-->
+<div th:replace="fragments/navbar :: navbar"></div>
 
-    <div class="container-fluid d-flex align-items-center justify-content-center mb-4 mt-4">
+<div class="container-fluid d-flex align-items-center justify-content-center mb-4 mt-4">
 
-        <form class="d-flex flex-column w-100 position-relative needs-validation"
-              style="max-width: 80%;" novalidate
-              th:action="@{/guardar-orden}" method="post">
+    <form class="d-flex flex-column w-100 position-relative needs-validation"
+          style="max-width: 80%;" novalidate id="form-crear-orden"
+          th:action="@{/guardar-orden}" method="post">
 
-            <!-- Empleado -->
-            <input type="hidden" name="empleadoId" th:value="${empleado.id}" />
+        <!-- Empleado -->
+        <input type="hidden" name="empleadoId" th:value="${empleado.id}" />
 
-            <!-- Fila: Cliente Nombre, Cliente Teléfono, Cuenta Corriente -->
-            <div class="row">
-                <div class="col-md-5 mb-3">
-                    <label for="clienteNombre">Nombre del cliente *</label>
-                    <input type="text" class="form-control" name="clienteNombre" id="clienteNombre" required />
-                    <div class="invalid-feedback">Ingresa un nombre válido.</div>
-                </div>
-                <div class="col-md-5 mb-3">
-                    <label for="clienteTelefono">Teléfono *</label>
-                    <input type="text" class="form-control" name="clienteTelefono" id="clienteTelefono" required />
-                    <div class="invalid-feedback">Ingresa un número válido.</div>
-                </div>
-                <div class="col-md-2 mb-3 d-flex align-items-end">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="esCuentaCorriente" id="esCuentaCorriente">
-                        <label class="form-check-label" for="esCuentaCorriente">
-                            Cuenta corriente
-                        </label>
-                    </div>
+        <!-- Fila: Cliente Nombre, Cliente Teléfono, Cuenta Corriente -->
+        <div class="row">
+            <h6>Datos del cliente</h6>
+            <hr/>
+            <div class="col-md-5 mb-3">
+                <label for="clienteNombre">Nombre del cliente *</label>
+                <input type="text" class="form-control" name="clienteNombre" id="clienteNombre" placeholder="Nombre Apellido" required />
+            </div>
+            <div class="col-md-5 mb-3">
+                <label for="clienteTelefono">Teléfono *</label>
+                <input type="text" class="form-control" name="clienteTelefono" id="clienteTelefono" placeholder="XXXX XXXXXX" required />
+            </div>
+            <div class="col-md-2 mb-3 d-flex align-items-end">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="esCuentaCorriente" id="esCuentaCorriente">
+                    <label class="form-check-label" for="esCuentaCorriente">
+                        ¿Cta. Corriente?
+                    </label>
                 </div>
             </div>
+        </div>
 
-            <!-- Fila: Categoría Producto -->
-            <div class="row">
-                <div class="col-12 mb-3">
-                    <label for="categoriaProducto">Categoría del producto *</label>
-                    <select class="form-control"
-                            name="categoriaProductoId"
-                            id="categoriaProducto"
-                            onchange="buscarProductoAsociado()"
-                            required>
-                        <option value="">-- Seleccioná un tipo --</option>
-                        <option th:each="categoria : ${categoriasProductos}"
-                                th:value="${categoria.idCategoriaProducto}"
-                                th:text="${categoria.nombre}"></option>
-                    </select>
-                    <div class="invalid-feedback">Elegí una categoría de producto.</div>
-                </div>
+        <!-- Fila: Categoría Producto -->
+        <h6 style="margin-bottom: 0;">Datos del producto</h6>
+        <hr/>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <select class="form-control"
+                        name="categoriaProductoId"
+                        id="categoriaProducto"
+                        onchange="buscarProductoAsociado()"
+                        required>
+                    <option value="">Categoría del producto *</option>
+                    <option th:each="categoria : ${categoriasProductos}"
+                            th:value="${categoria.idCategoriaProducto}"
+                            th:text="${categoria.nombre}"></option>
+                </select>
             </div>
+        </div>
 
-            <!-- Fila: Formulario Etiqueta -->
-            <div class="d-flex flex-column w-100 position-relative d-none" id="form-etiqueta" style="max-width: 80%;">
-                <!-- Tipo Papel Etiquetas -->
-                <div class="mb-3">
-                    <label class="form-label">Tipo de papel *</label>
+        <!-- Fila: Formulario Etiqueta -->
+        <div class="d-flex flex-column w-100 position-relative d-none" id="form-etiqueta">
+            <div class="row mb-3" style="width: 100%">
+                <div class="col-6 form-section tipo-papel" style="width: 48%; margin-right: 2%;">
+                    <!-- Tipo Papel Etiquetas -->
+                    <label class="form-label" style="margin-bottom: 1rem;">Tipo de papel *</label>
                     <div th:each="tipo : ${T(com.puntografico.pm.enums.TipoPapelEtiquetas).values()}">
                         <div class="form-check">
                             <input type="checkbox"
@@ -78,11 +79,10 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row mb-3">
+                <div class="col-6" style="width: 48%; margin-left: 2%;">
                     <!-- Tipo Laminado -->
-                    <div class="col-md-8">
-                        <label class="form-label">Tipo de laminado *</label>
+                    <div class="row form-section tipo-laminado">
+                        <label class="form-label" style="padding-left: 0; margin-bottom: 1rem;">Tipo de laminado *</label>
                         <div th:each="laminado : ${T(com.puntografico.pm.enums.TipoLaminado).values()}" class="form-check form-check-inline">
                             <input type="checkbox"
                                    class="form-check-input tipo-laminado-checkbox"
@@ -94,20 +94,20 @@
                                    th:text="${laminado}"></label>
                         </div>
                     </div>
-
-                    <!-- Con Perforación -->
-                    <div class="col-md-4 d-flex align-items-center">
+                    <div class="row mt-3 form-section">
+                        <label class="form-label" style="padding-left: 0; margin-bottom: 1rem;">¿Con perforación?</label>
                         <div class="form-check">
                             <input type="checkbox"
                                    class="form-check-input"
                                    id="conPerforacion"
                                    name="conPerforacion"
                                    value="true" />
-                            <label class="form-check-label" for="conPerforacion">Perforación</label>
+                            <label class="form-check-label" for="conPerforacion">¡Sí!</label>
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <div class="form-section" style="width: 100%">
                 <div class="row mb-3">
                     <!-- Medida -->
                     <div class="col-md-6">
@@ -155,47 +155,66 @@
                         <input type="number" class="form-control" id="resta" name="resta" readonly />
                     </div>
                 </div>
-
-                <button type="button" id="btnAgregarEtiqueta" class="btn btn-secondary mt-2">Agregar producto a la orden</button>
             </div>
+        </div>
 
-            <!-- Fila: Fecha Muestra y Medio de Pago -->
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="fechaMuestra">Fecha de muestra</label>
-                    <input type="date" class="form-control" name="fechaMuestra" id="fechaMuestra" />
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="medioPago">Medio de pago</label>
-                    <select class="form-control" name="medioPago" id="medioPago">
-                        <option value="">-- Seleccionar --</option>
-                        <option th:each="medio : ${T(com.puntografico.pm.enums.MedioPago).values()}"
-                                th:value="${medio}" th:text="${medio}"></option>
-                    </select>
-                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- Fila: Fecha Muestra y Medio de Pago -->
+        <h6>Datos para la entrega</h6>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="fechaMuestra">Fecha de muestra</label>
+                <input type="date" class="form-control" name="fechaMuestra" id="fechaMuestra" />
             </div>
-
-            <!-- Fila: Fecha Entrega y Hora Entrega -->
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="fechaEntrega">Fecha de entrega *</label>
-                    <input type="date" class="form-control" name="fechaEntrega" id="fechaEntrega" required />
-                    <div class="invalid-feedback">Ingresá una fecha válida.</div>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="horaEntrega">Hora de entrega</label>
-                    <input type="time" class="form-control" name="horaEntrega" id="horaEntrega" />
-                </div>
+            <div class="col-md-6 mb-3">
+                <label for="medioPago">Medio de pago</label>
+                <select class="form-control" name="medioPago" id="medioPago">
+                    <option value="">-- Seleccionar --</option>
+                    <option th:each="medio : ${T(com.puntografico.pm.enums.MedioPago).values()}"
+                            th:value="${medio}" th:text="${medio}"></option>
+                </select>
             </div>
+        </div>
 
-            <!-- Campo oculto para ID de etiqueta -->
-            <input type="hidden" name="etiquetaId" id="etiquetaId">
+        <!-- Fila: Fecha Entrega y Hora Entrega -->
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="fechaEntrega">Fecha de entrega *</label>
+                <input type="date" class="form-control" name="fechaEntrega" id="fechaEntrega" required />
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="horaEntrega">Hora de entrega</label>
+                <input type="time" class="form-control" name="horaEntrega" id="horaEntrega" />
+            </div>
+        </div>
 
-            <!-- Botón de envío -->
-            <button type="submit" class="btn btn-primary mt-3">Guardar orden</button>
-        </form>
+        <!-- Campo oculto para ID de etiqueta -->
+        <input type="hidden" name="etiquetaId" id="etiquetaId">
+        <!-- Campo oculto para ID de Sticker -->
+        <!--<input type="hidden" name="stickerId" id="stickerId">-->
 
-    </div>
+        <!-- Botón de envío -->
+        <button type="submit" class="btn btn-primary mt-3">Guardar orden</button>
+    </form>
+
+</div>
 
 </body>
 <script src="/js/crear-orden.js"></script>

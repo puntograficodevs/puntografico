@@ -1,7 +1,6 @@
 package com.puntografico.pm.service;
 
 import com.puntografico.pm.domain.Etiqueta;
-import com.puntografico.pm.domain.Papeleria;
 import com.puntografico.pm.repository.EtiquetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

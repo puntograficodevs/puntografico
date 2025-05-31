@@ -1,6 +1,5 @@
 package com.puntografico.pm.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.puntografico.pm.enums.EstadoOrden;
 import com.puntografico.pm.enums.EstadoPago;
 import com.puntografico.pm.enums.MedioPago;
@@ -54,10 +53,9 @@ public class OrdenTrabajo {
     @JoinColumn(name = "id_categoria_producto")
     private CategoriaProducto categoriaProducto;
 
-    //ESTO DESPUES SE VA BENCHU
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_papeleria")
-    private Papeleria papeleria;
+    @JoinColumn(name = "id_sticker")
+    private Sticker sticker;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_etiqueta")

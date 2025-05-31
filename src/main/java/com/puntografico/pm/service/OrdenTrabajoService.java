@@ -2,7 +2,7 @@ package com.puntografico.pm.service;
 
 import com.puntografico.pm.domain.Etiqueta;
 import com.puntografico.pm.domain.OrdenTrabajo;
-import com.puntografico.pm.domain.Papeleria;
+import com.puntografico.pm.domain.Sticker;
 import com.puntografico.pm.enums.EstadoOrden;
 import com.puntografico.pm.enums.EstadoPago;
 import com.puntografico.pm.repository.OrdenTrabajoRepository;
@@ -22,6 +22,9 @@ public class OrdenTrabajoService {
 
     @Autowired
     private EtiquetaService etiquetaService;
+
+    @Autowired
+    private StickerService stickerService;
 
     public List<OrdenTrabajo> buscarPorIdClienteNombreOClienteTelefono(String tipo, String valor) {
         List<OrdenTrabajo> ordenes;
@@ -54,12 +57,10 @@ public class OrdenTrabajoService {
 
     private String normalizar(String texto) {
         if (texto == null || texto.isBlank()) return "";
-        // Quitar tildes y pasar a lowercase
         String sinTildes = Normalizer.normalize(texto, Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "")
                 .toLowerCase();
 
-        // Capitalizar primera letra de cada palabra
         String[] palabras = sinTildes.split("\\s+");
         StringBuilder resultado = new StringBuilder();
         for (String palabra : palabras) {
@@ -102,7 +103,10 @@ public class OrdenTrabajoService {
         if (ordenTrabajo.getEtiqueta() != null) {
             Etiqueta etiqueta = etiquetaService.buscarPorId(ordenTrabajo.getEtiqueta().getId());
             total = etiqueta.getTotal();
-        } else {
+        } else if (ordenTrabajo.getSticker() != null) {
+            Sticker sticker = stickerService.buscarPorId(ordenTrabajo.getSticker().getId());
+            total = sticker.getTotal();
+        }else {
             total = 10.00;
         }
 
@@ -115,6 +119,9 @@ public class OrdenTrabajoService {
         if (ordenTrabajo.getEtiqueta() != null) {
             Etiqueta etiqueta = etiquetaService.buscarPorId(ordenTrabajo.getEtiqueta().getId());
             abonado = etiqueta.getAbonado();
+        } else if (ordenTrabajo.getSticker() != null) {
+            Sticker sticker = stickerService.buscarPorId(ordenTrabajo.getSticker().getId());
+            abonado = sticker.getAbonado();
         } else {
             abonado = 10.00;
         }
